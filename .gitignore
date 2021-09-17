@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/HostedBlazorWithFirebase/HostedBlazorWithFirebase/Server/appsettings.user.json
+/src/HostedBlazorWithFirebase/HostedBlazorWithFirebase/Client/wwwroot/firebase.user.js

@@ -1,5 +1,3 @@
-using HostedBlazorWithFirebase.Server.Data;
-using HostedBlazorWithFirebase.Server.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using System.Text.Json;
+using HostedBlazorWithFirebase.Client.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HostedBlazorWithFirebase.Server
@@ -27,18 +27,24 @@ namespace HostedBlazorWithFirebase.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var firebaseProject = Configuration["FirebaseProjectId"];
+
+
             services.AddDatabaseDeveloperPageExceptionFilter();
             
-            services.AddAuthentication()
+            services.AddAuthentication(options =>
+                {
+                    //options.
+                })
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://securetoken.google.com/[FIREBASE-PROJECT]";
+                    options.Authority = $"https://securetoken.google.com/{firebaseProject}";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/[FIREBASE-PROJECT]",
+                        ValidIssuer = $"https://securetoken.google.com/{firebaseProject}",
                         ValidateAudience = true,
-                        ValidAudience = "[FIREBASE-PROJECT]",
+                        ValidAudience = firebaseProject,
                         ValidateLifetime = true
                     };
                 });
@@ -62,6 +68,8 @@ namespace HostedBlazorWithFirebase.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseWebAssemblyDebugging();
 
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();

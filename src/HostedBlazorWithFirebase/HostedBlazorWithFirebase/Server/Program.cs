@@ -18,6 +18,10 @@ namespace HostedBlazorWithFirebase.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureHostConfiguration(config =>
+                {
+                    config.AddJsonFile("appsettings.user.json");
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

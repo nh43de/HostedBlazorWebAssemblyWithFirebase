@@ -1,7 +1,87 @@
 ﻿@page "/"
+@using HostedBlazorWithFirebase.Client.Models
+@using HostedBlazorWithFirebase.Client.Services
+@inject FirebaseJsProvider _firebase
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
-<h1>Hello, world!</h1>
+<AuthorizeView>
+    <Authorized>
+        Logged In as @context.User.Identity.Name
 
-Welcome to your new app.
+        <botton class="btn btn-light" @onclick="@(()=>Logout())">Logout</botton>
+    </Authorized>
+    <NotAuthorized>
+        Not logged in.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    </NotAuthorized>
+</AuthorizeView>
+
+
+Login.
+<div class="card">
+    <h4 class="card-header">Login</h4>
+    <div class="card-body">
+        <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Username</label>
+                <InputText @bind-Value="model.UserName" class="form-control" />
+                <ValidationMessage For="@(() => model.UserName)" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText @bind-Value="model.Password" type="password" class="form-control" />
+                <ValidationMessage For="@(() => model.Password)" />
+            </div>
+            <button disabled="@loading" class="btn btn-primary">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                Login
+            </button>
+
+        </EditForm>
+    </div>
+</div>
+
+<button class="btn btn-info" @onclick="@(()=>Test())">Test</button>
+
+@code {
+    private bool loading;
+    public LoginRequest model { get; set; } = new();
+
+    public async Task Logout()
+    {
+        await _firebase.SignOut();
+    }
+
+    public async Task Test()
+    {
+        var userJson = await JS.InvokeAsync<string>("firebaseGetCurrentUser");
+
+        Console.WriteLine(userJson);
+    }
+
+    private async void OnValidSubmit()
+    {
+        loading = true;
+        try
+        {
+            var r = await _firebase.UserSignIn(model.UserName, model.Password);
+
+            var returnUrl = NavigationManager.QueryString("returnUrl") ?? "/";
+
+            NavigationManager.NavigateTo(returnUrl, true);
+        }
+        catch (Exception ex)
+        {
+            loading = false;
+            StateHasChanged();
+        }
+    }
+}
+@*<button class="btn btn-info" @onclick="@(()=>Login())">Login</button>
+
+    <button class="btn btn-light" @onclick="@(()=>Logout())">Logout</button>*@
