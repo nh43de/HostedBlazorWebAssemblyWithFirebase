@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
-    public class TokenSource : IAccessTokenProvider
+    public class FirebaseTokenSource : IAccessTokenProvider
     {
         private readonly FirebaseJsProvider _firebaseJs;
 
-        public TokenSource(FirebaseJsProvider firebaseJs)
+        public FirebaseTokenSource(FirebaseJsProvider firebaseJs)
         {
             _firebaseJs = firebaseJs;
         }

@@ -45,7 +45,9 @@
         await cache.SetUser(user);
         await cache.SetTokens(tokens);
 
-        var loginState = Program.Services.GetService<ClientSideStateProvider>();
+        var loginState = Program.Services.GetService<FirebaseClientSideStateProvider>();
+
+        Console.WriteLine("User state changed");
 
         loginState.ManageUser();
     }

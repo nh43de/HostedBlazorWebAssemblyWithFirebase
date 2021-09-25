@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
-    public class ClientSideStateProvider : AuthenticationStateProvider
+    public class FirebaseClientSideStateProvider : AuthenticationStateProvider
     {
         private readonly FirebaseJsProvider _firebase;
         
-        public ClientSideStateProvider(FirebaseJsProvider firebase)
+        public FirebaseClientSideStateProvider(FirebaseJsProvider firebase)
         {
             _firebase = firebase;
         }

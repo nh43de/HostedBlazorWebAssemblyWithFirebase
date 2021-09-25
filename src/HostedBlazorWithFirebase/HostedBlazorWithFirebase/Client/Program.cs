@@ -21,28 +21,33 @@ namespace HostedBlazorWithFirebase.Client
     {
         public static IServiceProvider Services { get; private set; }
 
+        public static void AddFirebaseAuthServices(IServiceCollection services)
+        {
+            services.AddScoped<IAccessTokenProvider, FirebaseTokenSource>();
+
+            services.AddAuthorizationCore();
+
+            services.AddScoped<FirebaseTokenMessageHandler>();
+            services.AddScoped<FirebaseCache>();
+            services.AddScoped<FirebaseJsProvider>();
+            services.AddScoped<FirebaseClientSideStateProvider>();
+            services.AddBlazoredLocalStorage();
+            services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<FirebaseClientSideStateProvider>());
+        }
+
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddHttpClient("HostedBlazorWithFirebase.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            AddFirebaseAuthServices(builder.Services);
+
+            builder.Services.AddHttpClient("HostedBlazorWithFirebase.Authenticated", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 //.AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
                 .AddHttpMessageHandler<FirebaseTokenMessageHandler>();
-
-            builder.Services.AddScoped<IAccessTokenProvider, TokenSource>();
-
-            builder.Services.AddAuthorizationCore();
-            
-            builder.Services.AddScoped<FirebaseTokenMessageHandler>();
-            builder.Services.AddScoped<FirebaseCache>();
-            builder.Services.AddScoped<FirebaseJsProvider>();
-            builder.Services.AddScoped<ClientSideStateProvider>();
-            builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<ClientSideStateProvider>());
             
             // Supply HttpClient instances that include access tokens when making requests to the server project
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("HostedBlazorWithFirebase.ServerAPI"));
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("HostedBlazorWithFirebase.Authenticated"));
 
             var host = builder.Build();
 
