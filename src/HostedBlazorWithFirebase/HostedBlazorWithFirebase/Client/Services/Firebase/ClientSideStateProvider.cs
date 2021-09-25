@@ -32,8 +32,8 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
                     if (user == null || tokenInfo == null)
                         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
-                    Console.WriteLine("Auth state got user: " + JsonSerializer.Serialize(user));
-                    Console.WriteLine("Auth state got token: " + JsonSerializer.Serialize(tokenInfo));
+                    //Console.WriteLine("Auth state got user: " + JsonSerializer.Serialize(user));
+                    //Console.WriteLine("Auth state got token: " + JsonSerializer.Serialize(tokenInfo));
 
                     var claims = new List<Claim>
                     {
@@ -56,9 +56,9 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
                     return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
                 }
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("Request failed:" + ex.ToString());
+                //Console.WriteLine("Request failed:" + ex.ToString());
             }
 
             var authState = new AuthenticationState(new ClaimsPrincipal(identity));

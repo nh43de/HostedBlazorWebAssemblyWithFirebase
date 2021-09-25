@@ -101,14 +101,14 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
         {
             var response = await JS.InvokeAsync<string>("firebaseGetIdTokenResult");
 
-            Console.WriteLine("Got token from firebase: " + response);
+            //Console.WriteLine("Got token from firebase: " + response);
 
             if (response == null)
             {
                 //try to get from cache -- this is because there is a lag for loading and may return null on page refresh
                 var cachedTokens = await _firebaseCache.GetTokens();
 
-                Console.WriteLine("Got token from cache: " + cachedTokens);
+                //Console.WriteLine("Got token from cache: " + cachedTokens);
 
                 return cachedTokens;
             }
@@ -127,7 +127,7 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
         {
             var userJson = await JS.InvokeAsync<string>("firebaseGetCurrentUser");
 
-            Console.WriteLine(userJson);
+            //Console.WriteLine(userJson);
 
             if (userJson == null)
             {
@@ -139,7 +139,7 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
 
             var user = JsonSerializer.Deserialize<FirebaseUser>(userJson, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
 
-            Console.WriteLine(user);
+            //Console.WriteLine(user);
 
             return user;
         }

@@ -18,7 +18,7 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
 
         public async Task SetUser(FirebaseUser user)
         {
-            Console.WriteLine("Setting user in cache: " + JsonSerializer.Serialize(user));
+            //Console.WriteLine("Setting user in cache: " + JsonSerializer.Serialize(user));
 
             await localStorage.SetItemAsync("__firebaseUser", user);
         }
@@ -31,7 +31,7 @@ namespace HostedBlazorWithFirebase.Client.Services.Firebase
 
         public async Task SetTokens(FirebaseIdTokenResult firebaseTokens)
         {
-            Console.WriteLine("Setting tokens in cache: " + JsonSerializer.Serialize(firebaseTokens));
+            //Console.WriteLine("Setting tokens in cache: " + JsonSerializer.Serialize(firebaseTokens));
 
             await localStorage.SetItemAsync("__firebaseTokens", firebaseTokens);
         }
