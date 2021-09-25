@@ -38,10 +38,9 @@
     public static async Task UpdateFirebaseUserAndToken(FirebaseUser user, FirebaseIdTokenResult tokens)
     {
         var cache = Program.Services.GetService<FirebaseCache>();
-        var firebaseJs = Program.Services.GetService<FirebaseJsProvider>();  
+        var firebaseJs = Program.Services.GetService<FirebaseJsProvider>();
 
         firebaseJs.SetInitialized();
-
         await cache.SetUser(user);
         await cache.SetTokens(tokens);
 

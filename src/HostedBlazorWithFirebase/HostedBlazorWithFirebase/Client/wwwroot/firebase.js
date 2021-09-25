@@ -8,7 +8,13 @@ console.log("firebase.js loaded");
 
 //send to cache when auth state changes
 firebase.auth().onAuthStateChanged(async firebaseUser => {
-    console.log(firebaseUser);
+    console.log("Auth state changed");
+
+    if (firebaseUser == null) {
+        DotNet.invokeMethodAsync('HostedBlazorWithFirebase.Client', 'UpdateFirebaseUserAndToken', null, null);
+        return;
+    }
+
     var tokenResult = await firebaseUser.getIdTokenResult();
 
     DotNet.invokeMethodAsync('HostedBlazorWithFirebase.Client', 'UpdateFirebaseUserAndToken', firebaseUser, tokenResult);

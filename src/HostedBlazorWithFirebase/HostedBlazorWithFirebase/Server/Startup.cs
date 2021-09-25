@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Text.Json;
 using HostedBlazorWithFirebase.Client.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HostedBlazorWithFirebase.Server
@@ -28,14 +29,10 @@ namespace HostedBlazorWithFirebase.Server
         public void ConfigureServices(IServiceCollection services)
         {
             var firebaseProject = Configuration["FirebaseProjectId"];
-
-
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
             
-            services.AddAuthentication(options =>
-                {
-                    //options.
-                })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.Authority = $"https://securetoken.google.com/{firebaseProject}";
@@ -45,7 +42,9 @@ namespace HostedBlazorWithFirebase.Server
                         ValidIssuer = $"https://securetoken.google.com/{firebaseProject}",
                         ValidateAudience = true,
                         ValidAudience = firebaseProject,
-                        ValidateLifetime = true
+                        ValidateLifetime = true,
+                        NameClaimType = "user_id",
+                        RoleClaimType = "role"
                     };
                 });
 

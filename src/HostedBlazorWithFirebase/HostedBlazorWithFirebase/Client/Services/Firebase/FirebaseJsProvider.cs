@@ -14,10 +14,7 @@ namespace HostedBlazorWithFirebase.Client.Services
     /// </summary>
     public class FirebaseJsProvider
     {
-        private readonly TaskCompletionSource _init = new TaskCompletionSource();
-
-        public Task InitTask => _init.Task;
-
+        public bool Init { get; set; }
         private readonly FirebaseCache _firebaseCache;
 
         public IJSRuntime JS { get; set; }
@@ -30,16 +27,14 @@ namespace HostedBlazorWithFirebase.Client.Services
 
         //TODO: implement oauth-only popup flow
         //await JSRuntime.InvokeAsync<object>("FirebaseLoginOauth", DotNetObjectReference.Create(this));
-
         #region jsInterop
 
         public void SetInitialized()
         {
-            _init.SetResult();
+            Init = true;
         }
 
         #endregion
-
         #region methods
 
         public async Task SignOut()

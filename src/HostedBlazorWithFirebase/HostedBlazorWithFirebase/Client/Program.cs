@@ -26,10 +26,13 @@ namespace HostedBlazorWithFirebase.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddHttpClient("HostedBlazorWithFirebase.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                //.AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
                 .AddHttpMessageHandler<FirebaseTokenMessageHandler>();
 
-            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<IAccessTokenProvider, TokenSource>();
 
+            builder.Services.AddAuthorizationCore();
+            
             builder.Services.AddScoped<FirebaseTokenMessageHandler>();
             builder.Services.AddScoped<FirebaseCache>();
             builder.Services.AddScoped<FirebaseJsProvider>();
