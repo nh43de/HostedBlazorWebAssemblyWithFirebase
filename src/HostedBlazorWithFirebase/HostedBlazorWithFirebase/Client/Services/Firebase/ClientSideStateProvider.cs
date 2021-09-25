@@ -5,9 +5,8 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace HostedBlazorWithFirebase.Client.Services
+namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
     public class ClientSideStateProvider : AuthenticationStateProvider
     {

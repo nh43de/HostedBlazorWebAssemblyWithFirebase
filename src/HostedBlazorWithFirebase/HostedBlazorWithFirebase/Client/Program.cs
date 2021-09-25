@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using HostedBlazorWithFirebase.Client.Services;
+using HostedBlazorWithFirebase.Client.Services.Firebase;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 

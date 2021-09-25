@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
-using HostedBlazorWithFirebase.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace HostedBlazorWithFirebase.Client
+namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
     public class TokenSource : IAccessTokenProvider
     {

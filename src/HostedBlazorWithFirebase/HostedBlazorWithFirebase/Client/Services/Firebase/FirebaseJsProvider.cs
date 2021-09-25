@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
 using HostedBlazorWithFirebase.Client.Models;
 using Microsoft.JSInterop;
 using TrailBlazor.Models;
 
-namespace HostedBlazorWithFirebase.Client.Services
+namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
     /// <summary>
     /// C# wrapper around the firebase.js library for Blazor

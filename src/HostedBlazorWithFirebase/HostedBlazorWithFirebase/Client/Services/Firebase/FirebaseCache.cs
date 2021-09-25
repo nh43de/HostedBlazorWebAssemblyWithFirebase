@@ -5,7 +5,7 @@ using Blazored.LocalStorage;
 using HostedBlazorWithFirebase.Client.Models;
 using TrailBlazor.Models;
 
-namespace HostedBlazorWithFirebase.Client.Services
+namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
     public class FirebaseCache
     {

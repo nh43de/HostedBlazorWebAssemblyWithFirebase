@@ -2,9 +2,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using HostedBlazorWithFirebase.Client.Services;
 
-namespace HostedBlazorWithFirebase.Client
+namespace HostedBlazorWithFirebase.Client.Services.Firebase
 {
     /// <summary>
     /// Attaches the firebase token to outgoing requests.
